@@ -46,9 +46,9 @@ week_4/
 ├── frontend/
 │   ├── src/
 │   │   ├── templates/
-│   │   │   ├── index.html          # Landing + resume upload + role selection
-│   │   │   ├── roadmap.html        # Roadmap results page
-│   │   │   └── stats.html          # Job market charts dashboard
+│   │   │   ├── index.html          # Landing Page 
+│   │   │   ├── roadmap.html        # Roadmap results page  + resume upload
+│   │   │   └── stats.html          # Job market charts dashboard + Job upload
 │   │   │
 │   │   └── app.py                  # FastAPI + Jinja2 frontend server
 │   │
@@ -59,18 +59,18 @@ week_4/
 │
 ├── scripts/
 │   ├── run_pipeline.py             # One-shot: ingest → transform → tag → save to DB
-│   └── clear_db.py                 # Reset database for demo/testing
+│   └── clear_db.py                 # Reset database for demo/testing (optional)
 │
-├── tests/
-│   ├── test_pipeline.py            # Test ingest, transform, tag
-│   ├── test_ai.py                  # Test extractor, gap, roadmap
-│   └── test_api.py                 # Test backend endpoints with httpx
+├── tests/ (optional)
+│   ├── test_pipeline.py            # Test ingest, transform, tag (optional)
+│   ├── test_ai.py                  # Test extractor, gap, roadmap (optional)
+│   └── test_api.py                 # Test backend endpoints with httpx (optional) 
 │
-├── secrets/
-│   └── README.md                   # Instructions, never commit actual secrets
+├── secrets/ (Not Commited)
+│   └── README.md                   # Instructions, never commit actual secrets 
 │
 ├── .env.example                    # Root level example
 ├── .gitignore
-├── docker-compose.yml
+├── docker-compose.yml 
 └── README.md
 ```
