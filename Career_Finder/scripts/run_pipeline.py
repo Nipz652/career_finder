@@ -3,8 +3,9 @@ One-shot pipeline script.
 Run this once before starting the backend server to populate the database.
 
 Usage:
-    python scripts/run_pipeline.py              # full pipeline
-    python scripts/run_pipeline.py --tag-only   # skip ingest/transform, just re-tag
+    python scripts/run_pipeline.py                          # auto-detect source
+    python scripts/run_pipeline.py --mhtml-dir path/to/dir # use specific .mhtml folder
+    python scripts/run_pipeline.py --tag-only               # skip ingest/transform, just re-tag
 """
 
 import asyncio
@@ -25,7 +26,7 @@ from db.queries import insert_jobs_batch
 PROCESSED_PATH = Path(__file__).parent.parent / "data" / "processed" / "jobs_tagged.json"
 
 
-async def run_full_pipeline() -> None:
+async def run_full_pipeline(mhtml_dir: Path | None = None) -> None:
     """Run ingest → transform → insert → tag."""
     print("=" * 50)
     print("STEP 1: Initialise database")
@@ -34,15 +35,25 @@ async def run_full_pipeline() -> None:
 
     print("\n" + "=" * 50)
     print("STEP 2: Ingest raw job data")
+    if mhtml_dir:
+        print(f"        Source: .mhtml directory → {mhtml_dir}")
     print("=" * 50)
-    raw_jobs = await ingest_jobs()
+    raw_jobs = await ingest_jobs(mhtml_dir=mhtml_dir)
     print(f"Ingested {len(raw_jobs)} raw jobs.")
+
+    if not raw_jobs:
+        print("\n[pipeline] No jobs ingested. Aborting.")
+        return
 
     print("\n" + "=" * 50)
     print("STEP 3: Transform and clean")
     print("=" * 50)
     clean_jobs = transform_jobs(raw_jobs)
     print(f"Cleaned {len(clean_jobs)} jobs.")
+
+    if not clean_jobs:
+        print("\n[pipeline] No jobs passed cleaning. Aborting.")
+        return
 
     print("\n" + "=" * 50)
     print("STEP 4: Insert into database")
@@ -73,14 +84,27 @@ async def run_tag_only() -> None:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Career Path Advisor data pipeline")
+
+    parser.add_argument(
+        "--mhtml-dir",
+        type=str,
+        default=None,
+        help=(
+            "Path to a directory containing .mhtml job posting files. "
+            "If not set, falls back to MHTML_DIR env var, then data/raw/mhtml/, "
+            "then JSearch API, then static JSON."
+        ),
+    )
     parser.add_argument(
         "--tag-only",
         action="store_true",
-        help="Skip ingest/transform and only re-tag untagged jobs",
+        help="Skip ingest/transform and only re-tag untagged jobs in the DB.",
     )
+
     args = parser.parse_args()
 
     if args.tag_only:
         asyncio.run(run_tag_only())
     else:
-        asyncio.run(run_full_pipeline())
+        mhtml_dir = Path(args.mhtml_dir) if args.mhtml_dir else None
+        asyncio.run(run_full_pipeline(mhtml_dir=mhtml_dir))
