@@ -4,8 +4,10 @@
 week_4/
 │
 ├── data/
-│   ├── raw/                        # Raw scraped/fetched job data
-│   │   └── jobs_raw.json
+│   ├── source/                     # Raw scraped/fetched job data
+│   │   └── jobs_source.mhtml
+│   ├── raw/                        # Extracted HTML job data
+│   │   └── jobs_raw.html
 │   ├── processed/                  # Cleaned and tagged data
 │   │   └── jobs_tagged.json
 │   └── jobs.db                     # SQLite database
@@ -20,6 +22,7 @@ week_4/
 │   │   │
 │   │   ├── ai/
 │   │   │   ├── __init__.py
+│   │   │   ├── prompt_model.py        # Prompt Ollama models
 │   │   │   ├── extractor.py        # Extract skills from resume via Gemini
 │   │   │   ├── gap.py              # Deterministic skill gap set subtraction
 │   │   │   ├── roadmap.py          # Generate prioritised learning roadmap
