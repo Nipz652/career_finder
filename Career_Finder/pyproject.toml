@@ -1,5 +1,5 @@
 [project]
-name = "backend"
+name = "career-finder"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -8,4 +8,5 @@ dependencies = [
     "bs4>=0.0.2",
     "pydantic>=2.13.4",
     "requests>=2.34.2",
+    "ruff>=0.15.15",
 ]
