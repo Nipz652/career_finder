@@ -1,0 +1,112 @@
+[
+  {
+    "id": "static-001",
+    "role": "Data Engineer",
+    "title": "Senior Data Engineer",
+    "company": "TechCorp Malaysia",
+    "location": "Kuala Lumpur",
+    "description": "We are looking for a Senior Data Engineer to build and maintain scalable data pipelines. You will work with Python, Apache Spark, and AWS to process large datasets. Experience with Airflow for workflow orchestration, dbt for data transformation, and Kafka for streaming data is required. Knowledge of SQL, PostgreSQL, and data warehouse concepts is essential. Familiarity with Docker and Kubernetes for containerised deployments is a plus.",
+    "tech_stack": null,
+    "source": "static",
+    "created_at": "2025-01-01T00:00:00Z"
+  },
+  {
+    "id": "static-002",
+    "role": "Data Engineer",
+    "title": "Data Engineer",
+    "company": "FinTech Solutions",
+    "location": "Petaling Jaya",
+    "description": "Join our data team to design and implement ETL pipelines using Python and SQL. You will work with cloud infrastructure on AWS including S3, Redshift, and Glue. Experience with Apache Airflow, Spark, and real-time data processing with Kafka is required. Strong knowledge of data modelling and SQL optimisation. Git and CI/CD experience essential.",
+    "tech_stack": null,
+    "source": "static",
+    "created_at": "2025-01-01T00:00:00Z"
+  },
+  {
+    "id": "static-003",
+    "role": "Data Engineer",
+    "title": "Junior Data Engineer",
+    "company": "DataFirst",
+    "location": "Remote",
+    "description": "Entry-level data engineer role working with Python, SQL and cloud platforms. You will build data pipelines using Apache Airflow and store data in PostgreSQL and BigQuery. Experience with dbt, Python pandas, and basic knowledge of Docker is expected. Familiarity with Google Cloud Platform preferred.",
+    "tech_stack": null,
+    "source": "static",
+    "created_at": "2025-01-01T00:00:00Z"
+  },
+  {
+    "id": "static-004",
+    "role": "Backend Developer",
+    "title": "Backend Software Engineer",
+    "company": "Startup KL",
+    "location": "Kuala Lumpur",
+    "description": "We need a backend engineer experienced in Python and FastAPI to build REST APIs. You will work with PostgreSQL, Redis for caching, and deploy on AWS using Docker and Kubernetes. Experience with CI/CD pipelines, GitHub Actions, and unit testing with pytest is required. Knowledge of microservices architecture and message queues like RabbitMQ or Kafka is a plus.",
+    "tech_stack": null,
+    "source": "static",
+    "created_at": "2025-01-01T00:00:00Z"
+  },
+  {
+    "id": "static-005",
+    "role": "Backend Developer",
+    "title": "Senior Backend Developer",
+    "company": "Enterprise Corp",
+    "location": "Cyberjaya",
+    "description": "Senior backend role requiring Java and Spring Boot expertise to build microservices. Strong knowledge of REST APIs, PostgreSQL, MongoDB, and Redis. Experience with Docker, Kubernetes, and cloud deployment on AWS or Azure. CI/CD with Jenkins or GitHub Actions. Knowledge of system design and distributed systems required.",
+    "tech_stack": null,
+    "source": "static",
+    "created_at": "2025-01-01T00:00:00Z"
+  },
+  {
+    "id": "static-006",
+    "role": "Backend Developer",
+    "title": "Backend Developer (Node.js)",
+    "company": "WebAgency",
+    "location": "Penang",
+    "description": "Backend developer role focused on Node.js and Express.js. Building RESTful APIs consumed by mobile and web clients. Experience with MongoDB, PostgreSQL, and Redis. Docker for containerisation, Git for version control. Knowledge of JWT authentication, API security, and rate limiting required.",
+    "tech_stack": null,
+    "source": "static",
+    "created_at": "2025-01-01T00:00:00Z"
+  },
+  {
+    "id": "static-007",
+    "role": "Machine Learning Engineer",
+    "title": "ML Engineer",
+    "company": "AI Ventures",
+    "location": "Kuala Lumpur",
+    "description": "Machine learning engineer to build and deploy ML models at scale. Strong Python skills with PyTorch and TensorFlow. Experience with MLflow for experiment tracking, feature engineering, and model deployment using FastAPI or Flask. Knowledge of Docker, Kubernetes, and cloud ML platforms (AWS SageMaker or GCP Vertex AI). Familiarity with data processing using Spark and SQL.",
+    "tech_stack": null,
+    "source": "static",
+    "created_at": "2025-01-01T00:00:00Z"
+  },
+  {
+    "id": "static-008",
+    "role": "Machine Learning Engineer",
+    "title": "Senior ML Engineer",
+    "company": "ResearchLab",
+    "location": "Remote",
+    "description": "Senior ML engineer working on NLP and computer vision models. Deep experience with Python, PyTorch, HuggingFace transformers, and scikit-learn. Knowledge of LLMs, RAG architectures, and vector databases like Pinecone or Weaviate. Experience with model fine-tuning, evaluation metrics, and production deployment. Docker, Git, and CI/CD experience required.",
+    "tech_stack": null,
+    "source": "static",
+    "created_at": "2025-01-01T00:00:00Z"
+  },
+  {
+    "id": "static-009",
+    "role": "DevOps Engineer",
+    "title": "DevOps Engineer",
+    "company": "CloudOps",
+    "location": "Kuala Lumpur",
+    "description": "DevOps engineer to manage cloud infrastructure and CI/CD pipelines. Strong knowledge of AWS services, Terraform for infrastructure as code, Docker and Kubernetes for container orchestration. Experience with GitHub Actions, Jenkins, and monitoring tools like Prometheus and Grafana. Linux administration, Bash scripting, and Python automation skills required.",
+    "tech_stack": null,
+    "source": "static",
+    "created_at": "2025-01-01T00:00:00Z"
+  },
+  {
+    "id": "static-010",
+    "role": "DevOps Engineer",
+    "title": "Site Reliability Engineer",
+    "company": "PlatformX",
+    "location": "Remote",
+    "description": "SRE role managing reliability and scalability of production systems. Expert knowledge of Kubernetes, Helm, and cloud platforms (AWS/GCP/Azure). Experience with observability tools: Prometheus, Grafana, Datadog, and distributed tracing. Terraform, Ansible for automation. Strong scripting in Python and Bash. On-call rotation required.",
+    "tech_stack": null,
+    "source": "static",
+    "created_at": "2025-01-01T00:00:00Z"
+  }
+]

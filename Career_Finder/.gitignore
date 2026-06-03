@@ -4,7 +4,6 @@ secrets/
 backend/.env
 frontend/.env
 
-data/
 __pycache__/
 .ruff_cache/
 .venv/
