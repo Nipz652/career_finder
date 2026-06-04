@@ -3,8 +3,13 @@
 Full pipeline: extract skills → compute gaps → generate roadmap.
 """
 
+import sys
+from pathlib import Path
+
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
+
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from ai.extractor import extract_skills, DailyQuotaExceededError, InvalidRequestError
 from ai.gap import compute_gaps

@@ -3,8 +3,7 @@ All SQL queries in one place.
 No raw SQL anywhere else in the codebase — import from here.
 """
 
-import sqlite3
-from db.connection import get_connection, DB_PATH
+from .connection import get_connection, DB_PATH
 
 
 # ---------------------------------------------------------------------------

@@ -4,13 +4,13 @@ Always use get_connection() — never connect directly in other modules.
 """
 
 import sqlite3
-import os
 from pathlib import Path
 from dotenv import load_dotenv
 
 load_dotenv()
 
-DB_PATH = os.getenv("DB_URL", "../../data/jobs.db")
+PROJECT_ROOT = Path(__file__).parent.parent.parent.parent
+DB_PATH = PROJECT_ROOT / "data" / "jobs.db"
 
 
 def get_connection(db_path: str | None = None) -> sqlite3.Connection:

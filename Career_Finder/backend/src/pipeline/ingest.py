@@ -47,7 +47,7 @@ ROLE_KEYWORDS: dict[str, list[str]] = {
 }
 
 # Default directory to look for .mhtml files when MHTML_DIR env var is not set.
-DEFAULT_MHTML_DIR = Path("../../data/raw/mhtml")
+DEFAULT_MHTML_DIR = Path("../data/raw/mhtml")
 
 RAPIDAPI_KEY = os.getenv("RAPIDAPI_KEY", "")
 MHTML_DIR_ENV = os.getenv("MHTML_DIR", "")

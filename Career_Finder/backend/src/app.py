@@ -4,12 +4,16 @@ Creates the FastAPI app, registers all routers, and handles startup.
 """
 
 import os
+from pathlib import Path
+import sys
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 
-from db.connection import init_db
-from routers import analyse, chat, stats
+sys.path.insert(0, str(Path(__file__).parent))
+
+from .db.connection import init_db
+from .routers import analyse, chat, stats
 
 load_dotenv()
 
@@ -46,7 +50,7 @@ app.include_router(stats.router, tags=["Stats"])
 @app.on_event("startup")
 async def startup():
     """Initialise DB on startup. Creates table if it doesn't exist."""
-    db_path = os.getenv("DB_URL", "../../data/jobs.db")
+    db_path = os.getenv("DB_URL", "../data/jobs.db")
     try:
         init_db(db_path)
         print(f"[startup] Backend ready. DB: {db_path}")
