@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your Roadmap — Career Path Advisor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <style>
+    :root {
+      --ink:    #0d0d0d;
+      --paper:  #f5f2eb;
+      --accent: #e84a2e;
+      --muted:  #6b6760;
+      --card:   #ffffff;
+      --border: #ddd9d0;
+      --high:   #c0392b;
+      --medium: #d68910;
+      --low:    #5d6d7e;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 48px;
+      border-bottom: 1px solid var(--border);
+      background: var(--paper);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-links a {
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-decoration: none;
+      margin-left: 24px;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--ink); }
+
+    /* ── Header band ── */
+    .page-header {
+      padding: 64px 48px 48px;
+      border-bottom: 1px solid var(--border);
+      background: var(--card);
+    }
+
+    .role-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .page-header h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+
+    .summary-text {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--muted);
+      max-width: 680px;
+    }
+
+    /* ── Meta row ── */
+    .meta-row {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+      background: var(--paper);
+    }
+
+    .meta-item {
+      padding: 20px 32px;
+      border-right: 1px solid var(--border);
+      font-size: 0.82rem;
+    }
+
+    .meta-item:last-child { border-right: none; }
+
+    .meta-item strong {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      display: block;
+      color: var(--ink);
+      margin-bottom: 2px;
+    }
+
+    .meta-item span { color: var(--muted); }
+
+    /* ── Current skills ── */
+    .skills-band {
+      padding: 28px 48px;
+      border-bottom: 1px solid var(--border);
+      background: var(--card);
+    }
+
+    .skills-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .skill-chip {
+      display: inline-block;
+      background: #e6f4ea;
+      color: #1e6b3a;
+      border: 1px solid #b8ddc5;
+      border-radius: 4px;
+      padding: 4px 10px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      margin: 3px 4px 3px 0;
+    }
+
+    .gap-chip {
+      display: inline-block;
+      background: #fdf0ee;
+      color: #c0392b;
+      border: 1px solid #f4c2ba;
+      border-radius: 4px;
+      padding: 4px 10px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      margin: 3px 4px 3px 0;
+    }
+
+    /* ── Steps layout ── */
+    .steps-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 60vh;
+    }
+
+    .steps-sidebar {
+      border-right: 1px solid var(--border);
+      padding: 40px 32px;
+      position: sticky;
+      top: 65px;
+      height: fit-content;
+    }
+
+    .sidebar-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .sidebar-step-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      text-decoration: none;
+      color: var(--ink);
+      transition: color 0.15s;
+    }
+
+    .sidebar-step-link:hover { color: var(--accent); }
+
+    .sidebar-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--accent);
+      width: 20px;
+      flex-shrink: 0;
+    }
+
+    .sidebar-skill {
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-transform: capitalize;
+    }
+
+    .sidebar-weeks {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-left: auto;
+    }
+
+    /* ── Step cards ── */
+    .steps-main {
+      padding: 40px 48px;
+    }
+
+    .step-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 24px;
+      overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+
+    .step-card:hover {
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+
+    .step-card-header {
+      padding: 24px 28px 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .step-priority {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .step-skill-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-transform: capitalize;
+    }
+
+    .step-badges {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .badge-demand {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 4px;
+    }
+
+    .badge-demand.high   { background: #fdf0ee; color: var(--high);   border: 1px solid #f4c2ba; }
+    .badge-demand.medium { background: #fef9e7; color: var(--medium); border: 1px solid #fde8a5; }
+    .badge-demand.low    { background: #f0f3f4; color: var(--low);    border: 1px solid #ccd5db; }
+
+    .badge-weeks {
+      font-size: 0.72rem;
+      color: var(--muted);
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 4px 10px;
+    }
+
+    .step-card-body {
+      padding: 16px 28px 24px;
+    }
+
+    .step-reason {
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .resources-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .resource-link {
+      display: inline-block;
+      font-size: 0.82rem;
+      color: var(--ink);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 6px 12px;
+      margin: 0 6px 6px 0;
+      text-decoration: none;
+      transition: all 0.15s;
+      background: var(--paper);
+    }
+
+    .resource-link:hover {
+      background: var(--ink);
+      color: var(--paper);
+      border-color: var(--ink);
+    }
+
+    /* ── Footer actions ── */
+    .footer-actions {
+      padding: 40px 48px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .btn-primary-custom {
+      background: var(--ink);
+      color: var(--paper);
+      border: none;
+      border-radius: 6px;
+      padding: 12px 24px;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .btn-primary-custom:hover { background: var(--accent); color: var(--paper); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 24px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-ghost:hover { border-color: var(--ink); color: var(--ink); }
+
+    .meta-tokens {
+      margin-left: auto;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* ── No data state ── */
+    .no-data {
+      text-align: center;
+      padding: 120px 24px;
+    }
+
+    .no-data h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .page-header { padding: 40px 24px 32px; }
+      .meta-row { flex-wrap: wrap; }
+      .meta-item { border-bottom: 1px solid var(--border); }
+      .skills-band { padding: 20px 24px; }
+      .steps-layout { grid-template-columns: 1fr; }
+      .steps-sidebar { display: none; }
+      .steps-main { padding: 24px; }
+      .footer-actions { padding: 24px; flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">Career Path Advisor</a>
+  <div class="nav-links">
+    <a href="/stats">Job Market</a>
+    <a href="/">New Analysis</a>
+  </div>
+</nav>
+
+<!-- No data fallback -->
+<div class="no-data" id="noDataState" style="display:none;">
+  <h2>No roadmap found</h2>
+  <p style="color:var(--muted);margin-bottom:24px;">
+    It looks like you landed here directly. Please upload your resume first.
+  </p>
+  <a href="/" class="btn-primary-custom">← Go back</a>
+</div>
+
+<!-- Main content (hidden until data loads) -->
+<div id="mainContent" style="display:none;">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div class="role-tag" id="roleTag">Target Role</div>
+    <h1 id="pageTitle">Your Learning Roadmap</h1>
+    <p class="summary-text" id="summaryText"></p>
+  </div>
+
+  <!-- Meta row -->
+  <div class="meta-row">
+    <div class="meta-item">
+      <strong id="metaGaps">0</strong>
+      <span>Skill gaps found</span>
+    </div>
+    <div class="meta-item">
+      <strong id="metaSteps">0</strong>
+      <span>Steps in your roadmap</span>
+    </div>
+    <div class="meta-item">
+      <strong id="metaWeeks">0</strong>
+      <span>Estimated weeks total</span>
+    </div>
+    <div class="meta-item">
+      <strong id="metaSkills">0</strong>
+      <span>Skills you already have</span>
+    </div>
+  </div>
+
+  <!-- Current skills -->
+  <div class="skills-band">
+    <div class="skills-label">Your current skills</div>
+    <div id="currentSkillsEl"></div>
+    <div style="margin-top:16px;">
+      <div class="skills-label">Skills to learn</div>
+      <div id="gapsEl"></div>
+    </div>
+  </div>
+
+  <!-- Steps -->
+  <div class="steps-layout">
+    <div class="steps-sidebar">
+      <div class="sidebar-title">Roadmap steps</div>
+      <div id="sidebarLinks"></div>
+    </div>
+
+    <div class="steps-main" id="stepsContainer"></div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer-actions">
+    <a href="/" class="btn-primary-custom">← Analyse another resume</a>
+    <a href="/stats" class="btn-ghost">View job market stats</a>
+    <span class="meta-tokens" id="tokenInfo"></span>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+<script>
+  const BACKEND_URL = "{{ backend_url }}";
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const raw = sessionStorage.getItem('roadmap');
+    if (!raw) {
+      document.getElementById('noDataState').style.display = 'block';
+      return;
+    }
+
+    let roadmap;
+    try { roadmap = JSON.parse(raw); }
+    catch {
+      document.getElementById('noDataState').style.display = 'block';
+      return;
+    }
+
+    document.getElementById('mainContent').style.display = 'block';
+    renderRoadmap(roadmap);
+  });
+
+  function renderRoadmap(r) {
+    // Header
+    document.getElementById('roleTag').textContent = r.target_role;
+    document.getElementById('pageTitle').textContent =
+      `Your ${r.target_role} Roadmap`;
+    document.getElementById('summaryText').textContent = r.summary;
+
+    // Meta
+    const totalWeeks = r.steps.reduce((acc, s) => acc + (s.estimated_weeks || 0), 0);
+    document.getElementById('metaGaps').textContent  = r.gaps.length;
+    document.getElementById('metaSteps').textContent = r.steps.length;
+    document.getElementById('metaWeeks').textContent = totalWeeks;
+    document.getElementById('metaSkills').textContent = r.current_skills.length;
+
+    // Current skills
+    const skillsEl = document.getElementById('currentSkillsEl');
+    (r.current_skills || []).forEach(s => {
+      const chip = document.createElement('span');
+      chip.className = 'skill-chip';
+      chip.textContent = s;
+      skillsEl.appendChild(chip);
+    });
+
+    // Gap chips
+    const gapsEl = document.getElementById('gapsEl');
+    (r.gaps || []).forEach(s => {
+      const chip = document.createElement('span');
+      chip.className = 'gap-chip';
+      chip.textContent = s;
+      gapsEl.appendChild(chip);
+    });
+
+    // Sidebar + step cards
+    const sidebar   = document.getElementById('sidebarLinks');
+    const container = document.getElementById('stepsContainer');
+
+    (r.steps || []).forEach((step, idx) => {
+      // Sidebar link
+      const link = document.createElement('a');
+      link.className = 'sidebar-step-link';
+      link.href = `#step-${idx}`;
+      link.innerHTML = `
+        <span class="sidebar-num">${String(step.priority).padStart(2,'0')}</span>
+        <span class="sidebar-skill">${step.skill}</span>
+        <span class="sidebar-weeks">${step.estimated_weeks}w</span>`;
+      sidebar.appendChild(link);
+
+      // Card
+      const demandLevel = (step.demand_level || 'Low').toLowerCase();
+      const resources = (step.resources || []).map(url => {
+        let label = 'Learn →';
+        try {
+          const host = new URL(url).hostname.replace('www.','');
+          label = host;
+        } catch {}
+        return `<a href="${url}" target="_blank" rel="noopener" class="resource-link">${label}</a>`;
+      }).join('');
+
+      const card = document.createElement('div');
+      card.className = 'step-card';
+      card.id = `step-${idx}`;
+      card.innerHTML = `
+        <div class="step-card-header">
+          <div>
+            <div class="step-priority">Step ${step.priority}</div>
+            <div class="step-skill-name">${step.skill}</div>
+          </div>
+          <div class="step-badges">
+            <span class="badge-demand ${demandLevel}">${step.demand_level || 'Low'} Demand</span>
+            <span class="badge-weeks">~${step.estimated_weeks} weeks</span>
+          </div>
+        </div>
+        <div class="step-card-body">
+          <p class="step-reason">${step.reason}</p>
+          ${resources ? `<div class="resources-label">Learn from</div><div>${resources}</div>` : ''}
+        </div>`;
+      container.appendChild(card);
+    });
+
+    // Token info
+    if (r.tokens) {
+      document.getElementById('tokenInfo').textContent =
+        `${r.tokens.toLocaleString()} tokens · ${Math.round(r.time_ms / 1000)}s`;
+    }
+  }
+</script>
+
+</body>
+</html>

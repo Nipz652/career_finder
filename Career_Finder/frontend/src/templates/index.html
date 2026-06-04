@@ -1,0 +1,693 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Career Path Advisor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <style>
+    :root {
+      --ink:    #0d0d0d;
+      --paper:  #f5f2eb;
+      --accent: #e84a2e;
+      --muted:  #6b6760;
+      --card:   #ffffff;
+      --border: #ddd9d0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    /* ── Navigation ── */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 48px;
+      border-bottom: 1px solid var(--border);
+      background: var(--paper);
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-links a {
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-decoration: none;
+      margin-left: 28px;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--ink); }
+
+    /* ── Hero ── */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - 65px);
+    }
+
+    .hero-left {
+      padding: 80px 48px 80px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-right: 1px solid var(--border);
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+
+    .hero-tag::before {
+      content: '';
+      width: 24px;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+      margin-bottom: 24px;
+    }
+
+    h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--muted);
+      max-width: 460px;
+      margin-bottom: 48px;
+    }
+
+    /* ── Form panel ── */
+    .hero-right {
+      padding: 80px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: var(--card);
+    }
+
+    .form-label-custom {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .form-control-custom {
+      width: 100%;
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      background: var(--paper);
+      color: var(--ink);
+      transition: border-color 0.2s;
+      outline: none;
+    }
+
+    .form-control-custom:focus {
+      border-color: var(--ink);
+    }
+
+    .upload-zone {
+      border: 1.5px dashed var(--border);
+      border-radius: 8px;
+      padding: 32px 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: var(--paper);
+      position: relative;
+    }
+
+    .upload-zone:hover,
+    .upload-zone.drag-over {
+      border-color: var(--ink);
+      background: #f0ede4;
+    }
+
+    .upload-zone input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .upload-icon {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .upload-zone p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .upload-zone .file-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-top: 8px;
+    }
+
+    .field-group {
+      margin-bottom: 28px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--ink);
+      color: var(--paper);
+      border: none;
+      border-radius: 6px;
+      padding: 14px 24px;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn-submit:hover:not(:disabled) {
+      background: var(--accent);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* ── Error / success ── */
+    .alert-custom {
+      padding: 12px 16px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      margin-top: 16px;
+      display: none;
+    }
+
+    .alert-error {
+      background: #fdf0ee;
+      border: 1px solid #f4c2ba;
+      color: #c0392b;
+    }
+
+    .alert-success {
+      background: #edf7f1;
+      border: 1px solid #a8ddb8;
+      color: #1e7e34;
+    }
+
+    /* ── Progress ── */
+    .progress-wrap {
+      display: none;
+      margin-top: 16px;
+    }
+
+    .progress-bar-custom {
+      height: 3px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      width: 0%;
+      transition: width 0.4s ease;
+      animation: indeterminate 1.5s infinite linear;
+    }
+
+    @keyframes indeterminate {
+      0%   { transform: translateX(-100%) scaleX(0.5); }
+      100% { transform: translateX(200%) scaleX(0.5); }
+    }
+
+    .progress-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    /* ── Stats strip ── */
+    .stats-strip {
+      display: flex;
+      border-top: 1px solid var(--border);
+    }
+
+    .stat-item {
+      flex: 1;
+      padding: 32px 48px;
+      border-right: 1px solid var(--border);
+    }
+
+    .stat-item:last-child { border-right: none; }
+
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--ink);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* ── How it works ── */
+    .how-section {
+      padding: 80px 48px;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 80px;
+    }
+
+    .how-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding-top: 4px;
+    }
+
+    .how-steps {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    .how-step-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .how-step-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .how-step-desc {
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-left { padding: 48px 24px 40px; border-right: none; border-bottom: 1px solid var(--border); }
+      .hero-right { padding: 40px 24px 48px; }
+      .stats-strip { flex-direction: column; }
+      .stat-item { border-right: none; border-bottom: 1px solid var(--border); padding: 24px; }
+      .how-section { grid-template-columns: 1fr; gap: 32px; padding: 48px 24px; }
+      .how-steps { grid-template-columns: 1fr; gap: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <a href="/" class="nav-logo">Career Path Advisor</a>
+  <div class="nav-links">
+    <a href="/stats">Job Market</a>
+    <a href="/roadmap">My Roadmap</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <!-- Left: copy -->
+  <div class="hero-left">
+    <span class="hero-tag">AI-powered career tool</span>
+    <h1>Find your next <em>skill</em> to learn.</h1>
+    <p class="hero-desc">
+      Upload your resume, pick a target role, and get a personalised
+      learning roadmap built from real job market data — not generic advice.
+    </p>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:8px;font-size:0.82rem;color:var(--muted);">
+        <span style="color:var(--accent);font-size:1.1rem;">✓</span> Real job postings
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:0.82rem;color:var(--muted);">
+        <span style="color:var(--accent);font-size:1.1rem;">✓</span> Prioritised by demand
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:0.82rem;color:var(--muted);">
+        <span style="color:var(--accent);font-size:1.1rem;">✓</span> PDF processed in browser
+      </div>
+    </div>
+  </div>
+
+  <!-- Right: form -->
+  <div class="hero-right">
+    <h2 style="font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:700;margin-bottom:32px;">
+      Analyse my resume
+    </h2>
+
+    <!-- Upload -->
+    <div class="field-group">
+      <label class="form-label-custom">Resume (PDF)</label>
+      <div class="upload-zone" id="uploadZone">
+        <input type="file" id="pdfInput" accept=".pdf">
+        <span class="upload-icon">📄</span>
+        <p>Drop your PDF here or click to browse</p>
+        <p class="file-name" id="fileName" style="display:none;"></p>
+      </div>
+    </div>
+
+    <!-- Role select -->
+    <div class="field-group">
+      <label class="form-label-custom" for="roleSelect">Target Role</label>
+      <select id="roleSelect" class="form-control-custom">
+        <option value="" disabled selected>Loading roles…</option>
+      </select>
+    </div>
+
+    <!-- Submit -->
+    <button class="btn-submit" id="submitBtn" onclick="handleSubmit()" disabled>
+      <span id="btnText">Analyse Resume</span>
+      <span id="btnArrow">→</span>
+    </button>
+
+    <!-- Progress -->
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-bar-custom"><div class="progress-fill"></div></div>
+      <p class="progress-label" id="progressLabel">Extracting skills from resume…</p>
+    </div>
+
+    <!-- Alerts -->
+    <div class="alert-custom alert-error" id="errorAlert"></div>
+    <div class="alert-custom alert-success" id="successAlert"></div>
+  </div>
+</div>
+
+<!-- Stats strip -->
+<div class="stats-strip" id="statsStrip">
+  <div class="stat-item">
+    <div class="stat-num" id="statJobs">—</div>
+    <div class="stat-label">Job postings analysed</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num" id="statRoles">—</div>
+    <div class="stat-label">Target roles available</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num" id="statSkills">—</div>
+    <div class="stat-label">Unique skills tracked</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">100%</div>
+    <div class="stat-label">Resume stays in your browser</div>
+  </div>
+</div>
+
+<!-- How it works -->
+<div class="how-section">
+  <div class="how-title">How it<br>works</div>
+  <div class="how-steps">
+    <div>
+      <div class="how-step-num">01</div>
+      <div class="how-step-title">Upload your resume</div>
+      <p class="how-step-desc">Your PDF is processed entirely in your browser using PDF.js. The raw file never leaves your device.</p>
+    </div>
+    <div>
+      <div class="how-step-num">02</div>
+      <div class="how-step-title">AI extracts your skills</div>
+      <p class="how-step-desc">Gemini reads your resume text and identifies your current technical skills with precision.</p>
+    </div>
+    <div>
+      <div class="how-step-num">03</div>
+      <div class="how-step-title">Gap analysis runs</div>
+      <p class="how-step-desc">Your skills are compared against real job postings for your target role using deterministic set logic — no guessing.</p>
+    </div>
+    <div>
+      <div class="how-step-num">04</div>
+      <div class="how-step-title">Get your roadmap</div>
+      <p class="how-step-desc">A prioritised learning plan is generated, ranked by job market demand with time estimates and resource links.</p>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+
+<script>
+  const BACKEND_URL = "{{ backend_url }}";
+  let extractedPdfText = null;
+  let rolesLoaded = false;
+
+  // ── Load roles ────────────────────────────────────────────────────
+  window.addEventListener('DOMContentLoaded', async () => {
+    await loadRoles();
+    await loadStats();
+  });
+
+  async function loadRoles() {
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/roles`);
+      const data = await res.json();
+      const select = document.getElementById('roleSelect');
+      select.innerHTML = '<option value="" disabled selected>Select a role…</option>';
+      (data.roles || []).forEach(role => {
+        const opt = document.createElement('option');
+        opt.value = role;
+        opt.textContent = role;
+        select.appendChild(opt);
+      });
+      rolesLoaded = true;
+      checkReady();
+    } catch {
+      document.getElementById('roleSelect').innerHTML =
+        '<option value="" disabled selected>Could not load roles</option>';
+    }
+  }
+
+  async function loadStats() {
+    try {
+      const [rolesRes, distRes] = await Promise.all([
+        fetch(`${BACKEND_URL}/api/roles`),
+        fetch(`${BACKEND_URL}/api/stats/tech-distribution`),
+      ]);
+      const rolesData = await rolesRes.json();
+      const distData = await distRes.json();
+      document.getElementById('statRoles').textContent =
+        (rolesData.roles || []).length;
+      document.getElementById('statSkills').textContent =
+        (distData.labels || []).length + '+';
+
+      // job count from jobs-per-role
+      const roleRes = await fetch(`${BACKEND_URL}/api/stats/jobs-per-role`);
+      const roleData = await roleRes.json();
+      const total = (roleData.values || []).reduce((a, b) => a + b, 0);
+      document.getElementById('statJobs').textContent = total;
+    } catch { /* stats are decorative — silent fail */ }
+  }
+
+  // ── PDF upload ────────────────────────────────────────────────────
+  const uploadZone = document.getElementById('uploadZone');
+
+  uploadZone.addEventListener('dragover', e => {
+    e.preventDefault();
+    uploadZone.classList.add('drag-over');
+  });
+  uploadZone.addEventListener('dragleave', () => {
+    uploadZone.classList.remove('drag-over');
+  });
+  uploadZone.addEventListener('drop', e => {
+    e.preventDefault();
+    uploadZone.classList.remove('drag-over');
+    const file = e.dataTransfer.files[0];
+    if (file && file.type === 'application/pdf') processPdf(file);
+    else showError('Please drop a PDF file.');
+  });
+
+  document.getElementById('pdfInput').addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (file) processPdf(file);
+  });
+
+  async function processPdf(file) {
+    clearAlerts();
+    showSuccess(`Reading ${file.name}…`);
+
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+
+    try {
+      const arrayBuffer = await file.arrayBuffer();
+      const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+      let text = '';
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const content = await page.getTextContent();
+        text += content.items.map(item => item.str).join(' ') + '\n';
+      }
+      extractedPdfText = text.trim();
+
+      if (extractedPdfText.length < 50) {
+        showError('PDF appears empty or image-based. Please use a text-based PDF.');
+        extractedPdfText = null;
+        return;
+      }
+
+      const nameEl = document.getElementById('fileName');
+      nameEl.textContent = `✓ ${file.name} (${Math.round(extractedPdfText.length / 1000)}k chars)`;
+      nameEl.style.display = 'block';
+      clearAlerts();
+      checkReady();
+    } catch (err) {
+      showError('Could not read PDF. Try a different file.');
+      extractedPdfText = null;
+    }
+  }
+
+  function checkReady() {
+    document.getElementById('submitBtn').disabled =
+      !(extractedPdfText && rolesLoaded &&
+        document.getElementById('roleSelect').value);
+  }
+
+  document.getElementById('roleSelect').addEventListener('change', checkReady);
+
+  // ── Submit ────────────────────────────────────────────────────────
+  async function handleSubmit() {
+    const role = document.getElementById('roleSelect').value;
+    if (!extractedPdfText || !role) return;
+
+    clearAlerts();
+    setLoading(true, 'Extracting skills from resume…');
+
+    try {
+      const res = await fetch(`${BACKEND_URL}/analyse`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ resume_text: extractedPdfText, target_role: role }),
+      });
+
+      setLoading(true, 'Computing skill gaps…');
+
+      if (res.status === 429) {
+        const d = await res.json();
+        showError(`⚠️ ${d.error}`);
+        setLoading(false);
+        return;
+      }
+      if (res.status === 422) {
+        showError('No technical skills found in your resume. Try a more detailed PDF.');
+        setLoading(false);
+        return;
+      }
+      if (!res.ok) {
+        const d = await res.json().catch(() => ({}));
+        showError(d.error || `Server error ${res.status}. Please try again.`);
+        setLoading(false);
+        return;
+      }
+
+      const roadmap = await res.json();
+      sessionStorage.setItem('roadmap', JSON.stringify(roadmap));
+      window.location.href = '/roadmap';
+
+    } catch (err) {
+      showError('Cannot reach the backend. Is it running?');
+      setLoading(false);
+    }
+  }
+
+  // ── Helpers ───────────────────────────────────────────────────────
+  function setLoading(active, label = '') {
+    const wrap = document.getElementById('progressWrap');
+    const btn  = document.getElementById('submitBtn');
+    const lbl  = document.getElementById('progressLabel');
+    wrap.style.display = active ? 'block' : 'none';
+    btn.disabled = active;
+    if (label) lbl.textContent = label;
+  }
+
+  function showError(msg) {
+    const el = document.getElementById('errorAlert');
+    el.textContent = msg;
+    el.style.display = 'block';
+    document.getElementById('successAlert').style.display = 'none';
+  }
+
+  function showSuccess(msg) {
+    const el = document.getElementById('successAlert');
+    el.textContent = msg;
+    el.style.display = 'block';
+    document.getElementById('errorAlert').style.display = 'none';
+  }
+
+  function clearAlerts() {
+    document.getElementById('errorAlert').style.display = 'none';
+    document.getElementById('successAlert').style.display = 'none';
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+services:
+
+  # ── Backend ────────────────────────────────────────────────────────
+  backend:
+    image: backend
+    pull_policy: build
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    container_name: week_4-backend-1
+    networks:
+      - app-network
+    ports:
+      - "8001:8001"
+    environment:
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - DB_URL=/app/data/jobs.db
+    volumes:
+      # Mount the data folder so the DB is shared between
+      # the pipeline script and the running server
+      - ./data:/app/data
+
+  # ── Frontend ───────────────────────────────────────────────────────
+  frontend:
+    image: frontend
+    pull_policy: build
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    container_name: week_4-frontend-1
+    networks:
+      - app-network
+    ports:
+      - "8000:8000"
+    environment:
+      # Use Docker service name — NOT localhost
+      - BACKEND_URL=http://backend:8001
+    depends_on:
+      - backend
+
+# ── Shared bridge network ──────────────────────────────────────────
+networks:
+  app-network:
+    driver: bridge

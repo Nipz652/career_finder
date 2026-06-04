@@ -9,6 +9,8 @@ RUN uv sync --no-dev
 
 COPY src/ src/
 
+RUN mkdir -p /app/data/raw /app/data/processed
+
 EXPOSE 8001
 
 ENTRYPOINT ["uv", "run", "uvicorn"]

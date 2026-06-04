@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Job Market — Career Path Advisor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <style>
+    :root {
+      --ink:    #0d0d0d;
+      --paper:  #f5f2eb;
+      --accent: #e84a2e;
+      --muted:  #6b6760;
+      --card:   #ffffff;
+      --border: #ddd9d0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 48px;
+      border-bottom: 1px solid var(--border);
+      background: var(--paper);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-links a {
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-decoration: none;
+      margin-left: 24px;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--ink); }
+
+    /* ── Page header ── */
+    .page-header {
+      padding: 56px 48px 40px;
+      border-bottom: 1px solid var(--border);
+      background: var(--card);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .page-header h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .page-header p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    /* ── Dashboard grid ── */
+    .dashboard {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto;
+    }
+
+    .dash-cell {
+      padding: 40px 48px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dash-cell:nth-child(even) { border-right: none; }
+
+    .dash-cell.full-width {
+      grid-column: 1 / -1;
+      border-right: none;
+    }
+
+    .cell-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    /* Charts */
+    .chart-wrap {
+      position: relative;
+      height: 300px;
+    }
+
+    /* ── Search ── */
+    .search-bar {
+      display: flex;
+      gap: 0;
+      margin-bottom: 24px;
+    }
+
+    .search-input {
+      flex: 1;
+      border: 1.5px solid var(--border);
+      border-right: none;
+      border-radius: 6px 0 0 6px;
+      padding: 11px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      background: var(--paper);
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus { border-color: var(--ink); }
+
+    .search-btn {
+      background: var(--ink);
+      color: var(--paper);
+      border: none;
+      border-radius: 0 6px 6px 0;
+      padding: 11px 20px;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .search-btn:hover { background: var(--accent); }
+
+    /* ── Search results ── */
+    .result-item {
+      border-left: 3px solid var(--accent);
+      padding: 14px 18px;
+      margin-bottom: 12px;
+      background: var(--paper);
+      border-radius: 0 6px 6px 0;
+    }
+
+    .result-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.92rem;
+      margin-bottom: 2px;
+    }
+
+    .result-meta {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .skill-tag {
+      display: inline-block;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 2px 8px;
+      font-size: 0.74rem;
+      margin: 2px 3px 2px 0;
+      color: var(--ink);
+    }
+
+    .result-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    /* ── Skill table ── */
+    .skill-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .skill-table th {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 0 12px 12px 0;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .skill-table td {
+      padding: 10px 12px 10px 0;
+      font-size: 0.85rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    .skill-table tr:last-child td { border-bottom: none; }
+
+    .demand-bar-wrap {
+      width: 120px;
+    }
+
+    .demand-bar {
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .demand-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 3px;
+      transition: width 0.6s ease;
+    }
+
+    /* ── Loading state ── */
+    .loading-cell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 200px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .page-header { padding: 32px 24px; flex-direction: column; align-items: flex-start; gap: 12px; }
+      .dashboard { grid-template-columns: 1fr; }
+      .dash-cell { border-right: none; padding: 28px 24px; }
+      .dash-cell.full-width { border-right: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">Career Path Advisor</a>
+  <div class="nav-links">
+    <a href="/">Analyse Resume</a>
+    <a href="/roadmap">My Roadmap</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div>
+    <h1>Job Market Intelligence</h1>
+    <p>Real skill demand data from current job postings</p>
+  </div>
+</div>
+
+<div class="dashboard">
+
+  <!-- Pie chart -->
+  <div class="dash-cell">
+    <div class="cell-title">Top skills by demand</div>
+    <div class="chart-wrap">
+      <canvas id="pieChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Bar chart — jobs per role -->
+  <div class="dash-cell">
+    <div class="cell-title">Job postings by role</div>
+    <div class="chart-wrap">
+      <canvas id="roleChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Horizontal bar — skill ranking -->
+  <div class="dash-cell">
+    <div class="cell-title">Skill demand ranking</div>
+    <div class="chart-wrap">
+      <canvas id="hbarChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Skill table -->
+  <div class="dash-cell">
+    <div class="cell-title">Top 10 skills breakdown</div>
+    <div id="skillTableWrap">
+      <div class="loading-cell">Loading…</div>
+    </div>
+  </div>
+
+  <!-- Search — full width -->
+  <div class="dash-cell full-width">
+    <div class="cell-title">Search job postings</div>
+    <div class="search-bar">
+      <input type="text" id="searchInput" class="search-input"
+             placeholder="Search by skill, role, or company…">
+      <button class="search-btn" onclick="doSearch()">Search</button>
+    </div>
+    <div id="searchResults">
+      <p style="font-size:0.85rem;color:var(--muted);">
+        Enter a keyword to search job postings in the database.
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+
+<script>
+  const BACKEND_URL = "{{ backend_url }}";
+
+  const PALETTE = [
+    '#e84a2e','#0d0d0d','#6b6760','#c0392b','#d68910',
+    '#1a5276','#1e8449','#7d3c98','#2e86c1','#b9770e',
+  ];
+
+  window.addEventListener('DOMContentLoaded', async () => {
+    await Promise.all([
+      loadSkillDistribution(),
+      loadJobsPerRole(),
+    ]);
+  });
+
+  // ── Skill distribution ────────────────────────────────────────────
+  async function loadSkillDistribution() {
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/stats/tech-distribution`);
+      const data = await res.json();
+
+      if (!data.labels || !data.labels.length) return;
+
+      const maxVal = Math.max(...data.values);
+
+      // Pie chart
+      new Chart(document.getElementById('pieChart'), {
+        type: 'doughnut',
+        data: {
+          labels: data.labels,
+          datasets: [{
+            data: data.values,
+            backgroundColor: PALETTE,
+            borderWidth: 2,
+            borderColor: '#f5f2eb',
+          }],
+        },
+        options: {
+          cutout: '60%',
+          plugins: {
+            legend: {
+              position: 'right',
+              labels: {
+                font: { family: 'DM Sans', size: 11 },
+                padding: 12,
+                boxWidth: 12,
+              },
+            },
+          },
+        },
+      });
+
+      // Horizontal bar
+      new Chart(document.getElementById('hbarChart'), {
+        type: 'bar',
+        data: {
+          labels: data.labels,
+          datasets: [{
+            label: 'Jobs requiring skill',
+            data: data.values,
+            backgroundColor: data.labels.map((_, i) =>
+              i === 0 ? '#e84a2e' : '#ddd9d0'
+            ),
+            borderRadius: 4,
+          }],
+        },
+        options: {
+          indexAxis: 'y',
+          plugins: { legend: { display: false } },
+          scales: {
+            x: {
+              beginAtZero: true,
+              ticks: { stepSize: 1, font: { family: 'DM Sans', size: 11 } },
+              grid: { color: '#ddd9d0' },
+            },
+            y: { ticks: { font: { family: 'DM Sans', size: 11 } } },
+          },
+        },
+      });
+
+      // Skill table
+      const wrap = document.getElementById('skillTableWrap');
+      const rows = data.labels.map((label, i) => {
+        const pct = Math.round((data.values[i] / maxVal) * 100);
+        return `
+          <tr>
+            <td style="text-transform:capitalize;font-weight:500;">${label}</td>
+            <td>${data.values[i]}</td>
+            <td>
+              <div class="demand-bar-wrap">
+                <div class="demand-bar">
+                  <div class="demand-fill" style="width:${pct}%"></div>
+                </div>
+              </div>
+            </td>
+          </tr>`;
+      }).join('');
+
+      wrap.innerHTML = `
+        <table class="skill-table">
+          <thead>
+            <tr>
+              <th>Skill</th>
+              <th>Jobs</th>
+              <th>Demand</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>`;
+
+    } catch (e) {
+      console.error('Skill distribution failed:', e);
+    }
+  }
+
+  // ── Jobs per role ─────────────────────────────────────────────────
+  async function loadJobsPerRole() {
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/stats/jobs-per-role`);
+      const data = await res.json();
+
+      if (!data.labels || !data.labels.length) return;
+
+      new Chart(document.getElementById('roleChart'), {
+        type: 'bar',
+        data: {
+          labels: data.labels,
+          datasets: [{
+            label: 'Job postings',
+            data: data.values,
+            backgroundColor: '#0d0d0d',
+            borderRadius: 6,
+          }],
+        },
+        options: {
+          plugins: { legend: { display: false } },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { stepSize: 1, font: { family: 'DM Sans', size: 11 } },
+              grid: { color: '#ddd9d0' },
+            },
+            x: { ticks: { font: { family: 'DM Sans', size: 11 } } },
+          },
+        },
+      });
+    } catch (e) {
+      console.error('Jobs per role failed:', e);
+    }
+  }
+
+  // ── Search ────────────────────────────────────────────────────────
+  async function doSearch() {
+    const q = document.getElementById('searchInput').value.trim();
+    const container = document.getElementById('searchResults');
+    container.innerHTML = '<p style="font-size:0.85rem;color:var(--muted);">Searching…</p>';
+
+    try {
+      const res = await fetch(
+        `${BACKEND_URL}/api/jobs/search?q=${encodeURIComponent(q)}&limit=20`
+      );
+      const data = await res.json();
+
+      if (!data.results || !data.results.length) {
+        container.innerHTML =
+          '<p style="font-size:0.85rem;color:var(--muted);">No results found.</p>';
+        return;
+      }
+
+      container.innerHTML = data.results.map(job => {
+        const skills = job.tech_stack
+          ? job.tech_stack.split(',')
+              .map(s => `<span class="skill-tag">${s.trim()}</span>`)
+              .join('')
+          : '<span style="font-size:0.78rem;color:var(--muted);">No tags yet</span>';
+
+        return `
+          <div class="result-item">
+            <div class="result-title">${job.title || 'Untitled'}</div>
+            <div class="result-meta">
+              ${job.company || 'Unknown company'}
+              ${job.role ? ` · <strong>${job.role}</strong>` : ''}
+            </div>
+            <div>${skills}</div>
+            ${job.description
+              ? `<div class="result-desc">${job.description}</div>`
+              : ''}
+          </div>`;
+      }).join('');
+
+    } catch (err) {
+      container.innerHTML =
+        '<p style="color:#c0392b;font-size:0.85rem;">Could not reach backend.</p>';
+    }
+  }
+
+  document.getElementById('searchInput')
+    .addEventListener('keydown', e => {
+      if (e.key === 'Enter') doSearch();
+    });
+</script>
+
+</body>
+</html>
