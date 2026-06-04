@@ -1,13 +1,14 @@
+name: career-finder
+
 services:
 
-  # ── Backend ────────────────────────────────────────────────────────
   backend:
-    image: backend
+    image: career-finder-backend
     pull_policy: build
     build:
       context: backend
       dockerfile: Dockerfile
-    container_name: week_4-backend-1
+    container_name: career-finder-backend
     networks:
       - app-network
     ports:
@@ -16,29 +17,25 @@ services:
       - GOOGLE_API_KEY=${GOOGLE_API_KEY}
       - DB_URL=/app/data/jobs.db
     volumes:
-      # Mount the data folder so the DB is shared between
-      # the pipeline script and the running server
+      # Share data folder so pipeline writes DB that backend reads
       - ./data:/app/data
 
-  # ── Frontend ───────────────────────────────────────────────────────
   frontend:
-    image: frontend
+    image: career-finder-frontend
     pull_policy: build
     build:
       context: frontend
       dockerfile: Dockerfile
-    container_name: week_4-frontend-1
+    container_name: career-finder-frontend
     networks:
       - app-network
     ports:
       - "8000:8000"
     environment:
-      # Use Docker service name — NOT localhost
-      - BACKEND_URL=http://backend:8001
+      - BACKEND_URL=http://localhost:8001
     depends_on:
       - backend
 
-# ── Shared bridge network ──────────────────────────────────────────
 networks:
   app-network:
     driver: bridge

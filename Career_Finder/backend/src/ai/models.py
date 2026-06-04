@@ -1,7 +1,4 @@
-"""
-All Pydantic models for the Career Path Advisor.
-Single source of truth — import from here everywhere.
-"""
+"""All Pydantic models. Import from here everywhere."""
 
 from pydantic import BaseModel, field_validator
 from typing import List
@@ -20,12 +17,12 @@ class SkillStats(BaseModel):
     skill: str
     job_count: int
     demand_pct: float
-    demand_level: str       # "High" | "Medium" | "Low"
+    demand_level: str   # "High" | "Medium" | "Low"
 
 
 class SkillGapResult(BaseModel):
     gaps: List[str]
-    skill_demand: dict      # {skill: job_count}
+    skill_demand: dict = {}
     most_wanted: str = ""
     demand_range: str = ""
     statistics: List[SkillStats] = []
@@ -35,10 +32,11 @@ class SkillGapResult(BaseModel):
 
 class RoadmapStep(BaseModel):
     skill: str
-    priority: int           # 1 = learn first
-    reason: str             # why this skill matters for target role
-    estimated_weeks: int    # realistic weeks to learn
-    resources: List[str]    # URLs to learning materials
+    priority: int
+    reason: str
+    estimated_weeks: int
+    resources: List[str]
+    demand_level: str = "Low"
 
 
 class CareerRoadmap(BaseModel):
@@ -59,10 +57,7 @@ class AnalyseRequest(BaseModel):
     @classmethod
     def resume_not_empty(cls, v: str) -> str:
         if not v or len(v.strip()) < 50:
-            raise ValueError(
-                "Resume text is too short. "
-                "Please upload a valid resume PDF."
-            )
+            raise ValueError("Resume text is too short. Please upload a valid PDF.")
         return v.strip()
 
     @field_validator("target_role")
@@ -80,8 +75,3 @@ class ChatRequest(BaseModel):
 
 class ChatResponse(BaseModel):
     reply: str
-
-
-class ErrorResponse(BaseModel):
-    error: str
-    detail: str = ""

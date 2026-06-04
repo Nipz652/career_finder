@@ -1,22 +1,19 @@
-"""
-Clear database script.
-Resets tech_stack to NULL for all jobs so they can be re-tagged.
-Useful for demos or when re-running the pipeline.
+"""Reset tech_stack to NULL for re-tagging. Usage: python scripts/clear_db.py"""
 
-Usage:
-    python scripts/clear_db.py
-"""
-
+import os
+import sqlite3
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).parent.parent / "backend" / "src"))
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "backend" / "src"))
+from dotenv import load_dotenv
+load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 
-from db.queries import clear_tech_stacks
-from db.connection import DB_PATH
+DB_PATH = os.getenv("DB_URL", str(Path(__file__).resolve().parent.parent / "data" / "jobs.db"))
 
-
-if __name__ == "__main__":
-    count = clear_tech_stacks()
-    print(f"Cleared tech_stack for {count} rows in '{DB_PATH}'.")
-    print("Run scripts/run_pipeline.py --tag-only to re-tag.")
+with sqlite3.connect(DB_PATH) as conn:
+    c = conn.cursor()
+    c.execute("UPDATE jobs SET tech_stack = NULL")
+    conn.commit()
+    print(f"Cleared tech_stack for {c.rowcount} rows in '{DB_PATH}'.")
+    print("Run: python scripts/run_pipeline.py --tag-only")
