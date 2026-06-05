@@ -11,4 +11,5 @@ dependencies = [
     "google-genai",
     "httpx",
     "beautifulsoup4",
+    "ruff>=0.15.16",
 ]

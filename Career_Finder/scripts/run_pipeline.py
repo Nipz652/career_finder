@@ -12,7 +12,6 @@ reuse db/connection.py and db/queries.py.
 
 import asyncio
 import hashlib
-import json
 import os
 import re
 import sqlite3

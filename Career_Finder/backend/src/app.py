@@ -4,10 +4,13 @@ All imports are ABSOLUTE — no relative imports (no dot notation).
 This is required because uvicorn loads app.py as a top-level module.
 """
 
-import os
+import sys
+from pathlib import Path
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
+
+sys.path.insert(0, str(Path(__file__).parent))
 
 # Absolute imports — must match folder names under src/
 from db.connection import init_db, DB_PATH

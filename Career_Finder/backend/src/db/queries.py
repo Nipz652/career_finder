@@ -1,6 +1,5 @@
 """All SQL queries. No raw SQL anywhere else in the codebase."""
 
-import sqlite3
 from db.connection import get_connection, DB_PATH
 
 INVALID_SKILLS = {"not specified", "n/a", "none", "not mentioned", "not available"}
